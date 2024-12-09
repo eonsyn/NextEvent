@@ -100,8 +100,8 @@ router.post("/admin/login", async (req, res) => {
     res
       .cookie("auth_token", token, {
         httpOnly: true, // Prevent access from client-side JavaScript
-        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-        sameSite: "Strict", // Prevent CSRF
+        secure: true, // Use secure cookies in production
+        sameSite: "None", // Required for cross-origin cookies
         maxAge: 3600000, // 1 hour
       })
       .status(200)
