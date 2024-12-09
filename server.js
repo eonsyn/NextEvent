@@ -25,7 +25,7 @@ app.set("views", path.resolve("./views"));
 
 app.use(
   cors({
-    origin: "https://aryansingh-0.github.io/NextEvent/", // Replace with your frontend URL
+    origin: "https://aryansingh-0.github.io", // Replace with your frontend URL
     credentials: true, // Allow cookies
   })
 );
