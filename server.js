@@ -27,7 +27,7 @@ app.set("views", path.resolve("./views"));
 app.use(
   cors({
     origin: [
-      "https://aryansingh-0.github.io/NextEvent/", // Your first origin link
+      "https://aryansingh-0.github.io", // Your first origin link
       "http://localhost:5173", // Replace with your second origin link
     ], // Replace with your frontend URL
     credentials: true, // Allow cookies
