@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Reset and Styling for the Body */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container Styling */
+        .login-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+            color: #03dac6;
+        }
+
+        /* Input Fields Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background: #121212;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #03dac6;
+            box-shadow: 0 0 5px rgba(3, 218, 198, 0.5);
+        }
+
+        /* Button Styling */
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background: #03dac6;
+            border: none;
+            border-radius: 5px;
+            color: #121212;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #028e77;
+        }
+
+        /* Additional Links */
+        .links {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #03dac6;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form action="/api/auth/login" method="POST">
+            <div class="form-group">
+                <label for="email">Email ID</label>
+                <input type="email" id="email" name="emailId" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <div class="links">
+                <a href="/forgot-password">Forgot Password?</a><br>
+                <a href="/signup">Create an Account</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
