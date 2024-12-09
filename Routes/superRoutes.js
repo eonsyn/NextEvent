@@ -44,8 +44,8 @@ router.post("/login", async (req, res) => {
     res
       .cookie("auth_token", token, {
         httpOnly: true, // Prevent access from client-side JavaScript
-        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-        sameSite: "Strict", // Prevent CSRF
+        secure: true, // Use secure cookies in production
+        sameSite: "None", // Required for cross-origin cookies
         maxAge: 3600000, // 1 hour
       })
       .status(200)
@@ -55,30 +55,30 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-// router.post("/signup", async (req, res) => {
-//   try {
-//     const { userId, password } = req.body;
+router.post("/signup", async (req, res) => {
+  try {
+    const { userId, password } = req.body;
 
-//     // Validate input
-//     if (!userId || !password) {
-//       return res
-//         .status(400)
-//         .json({ message: "Email and password are required" });
-//     }
+    // Validate input
+    if (!userId || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
 
-//     const saltRounds = 10;
-//     const hashedPassword = await bcrypt.hash(password, saltRounds);
-//     const newAdmin = new superAdmin({
-//       password: hashedPassword,
-//       userId,
-//     });
-//     await newAdmin.save();
-//     res.status(201).json({ message: "Admin request registered successfully!" });
-//   } catch (error) {
-//     console.error("Error during login:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newAdmin = new superAdmin({
+      password: hashedPassword,
+      userId,
+    });
+    await newAdmin.save();
+    res.status(201).json({ message: "Admin request registered successfully!" });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 router.get("/pending", authenticateSuperadmin, async (req, res) => {
   try {
