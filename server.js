@@ -24,16 +24,23 @@ app.set("views", path.resolve("./views"));
 //middleware
 
 
+// app.use(
+//   cors({
+//     origin: [
+//       "https://aryansingh-0.github.io", // Your first origin link
+//       "http://localhost:5173",
+//       "https://console.cron-job.org",// Replace with your second origin link
+//     ], // Replace with your frontend URL
+//     credentials: true, // Allow cookies
+//   })
+// );
 app.use(
   cors({
-    origin: [
-      "https://aryansingh-0.github.io", // Your first origin link
-      "http://localhost:5173",
-      "https://console.cron-job.org",// Replace with your second origin link
-    ], // Replace with your frontend URL
+    origin: true, // Allow all origins
     credentials: true, // Allow cookies
   })
 );
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
