@@ -53,12 +53,16 @@ app.use(cookieParser());
 connectdb();
 
 //routes
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/user", userRoute);
 app.use("/api/superadmin", superadmin); //done
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 //server start
 app.listen(3000, () => {
   console.log("server is running at 3000");
