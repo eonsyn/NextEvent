@@ -75,9 +75,7 @@ router.post("/login", async (req, res) => {
 router.get("/pending", authenticateSuperadmin, async (req, res) => {
   try {
     const pendingAdmins = await PendingAdmin.find().select("-password"); // Exclude passwords
-    if (!pendingAdmins.length) {
-      return res.status(404).json({ message: "No pending admin requests found." });
-    }
+    
     res.status(200).json({ message: "Pending admin requests retrieved successfully.", data: pendingAdmins });
   } catch (error) {
     console.error("Error fetching pending requests:", error);
