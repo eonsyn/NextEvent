@@ -1,69 +1,66 @@
+// Import required modules
 const express = require("express");
 const path = require("path");
+const bcrypt = require("bcrypt"); // For password hashing
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+require("dotenv").config(); // Load environment variables
+
+// Import route handlers
 const adminRoutes = require("./Routes/adminRoutes");
 const authRoutes = require("./Routes/authRoute");
 const publicRoutes = require("./Routes/publicRoutes");
-const superadmin = require("./Routes/superRoutes");
-const connectdb = require("./config/dbConeect");
-const cors = require("cors");
-require("dotenv").config();
-const cookieParser = require("cookie-parser");
-const userRoute = require("./Routes/userRoutes");
+const superadminRoutes = require("./Routes/superRoutes");
+const userRoutes = require("./Routes/userRoutes");
 
+// Import MongoDB connection function
+const connectdb = require("./config/dbConeect");
+
+// Initialize Express app
 const app = express();
 
-//for cors
-// var corsOptions = {
-//   origin: "http://example.com",
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
-
+// Set up view engine for rendering EJS templates
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
-//middleware
-
-
-// app.use(
-//   cors({
-//     origin: [
-//       "https://aryansingh-0.github.io", // Your first origin link
-//       "http://localhost:5173",
-//       "https://console.cron-job.org",// Replace with your second origin link
-//     ], // Replace with your frontend URL
-//     credentials: true, // Allow cookies
-//   })
-// );
+// Configure CORS to allow cross-origin requests
 app.use(
   cors({
     origin: true, // Allow all origins
-    credentials: true, // Allow cookies
+    credentials: true, // Allow cookies in cross-origin requests
   })
 );
 
+// Middleware to set response headers for CORS credentials
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// Middleware for parsing JSON and URL-encoded request bodies
+app.use(express.json()); // Parse JSON payloads
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded payloads
+
+// Middleware for handling cookies
 app.use(cookieParser());
 
-//mongodb connection
+// Connect to MongoDB database
 connectdb();
 
-//routes
+// Define API routes
+app.use("/api/admin", adminRoutes); // Admin-related routes
+app.use("/api/auth", authRoutes); // Authentication-related routes
+app.use("/api/public", publicRoutes); // Publicly accessible routes
+app.use("/api/user", userRoutes); // User-related routes
+app.use("/api/superadmin", superadminRoutes); // Superadmin-related routes
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/public", publicRoutes);
-app.use("/api/user", userRoute);
-app.use("/api/superadmin", superadmin); //done
+// Default route - Homepage
+app.get("/", async (req, res) => {
+  res.send("Hello World!"); // Simple response for root URL
+});
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-//server start
-app.listen(3000, () => {
-  console.log("server is running at 3000");
+// Start the Express server
+const PORT = process.env.PORT || 3000; // Use environment port or default to 3000
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
